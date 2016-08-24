@@ -33,26 +33,6 @@ function filePath(projectName, dataKey) {
     return path.resolve(projectDir(projectName), './' + dataKey);
 }
 
-dispatcher.onGet(/\/\w+/, function(req, res) {
-    var projectName = getProject(req.url);
-    var projDir = projectDir(projectName);
-
-    return fsp.exists(projDir)
-    .then(function(exists) {
-        if (exists) {
-            return fsp.readdir(projDir)
-            .then(function(files) {
-                files = _.without(files,'.git');
-                res.writeHead(200, {'Content-Type': 'application/json'});
-                res.end(JSON.stringify(files,null,2)); 
-            });
-        } else {
-            res.writeHead(404, {'Content-Type': 'text/plain'});
-            res.end('Data doesn\'t exist');
-        }
-    });
-});
-
 dispatcher.onGet(/\/\w+\/\w+/, function(req, res) {
     var projectName = getProject(req.url);
     var dataKey = getDataKey(req.url);
@@ -78,6 +58,26 @@ dispatcher.onGet(/\/\w+\/\w+/, function(req, res) {
         }
     });
 
+});
+
+dispatcher.onGet(/\/\w+/, function(req, res) {
+    var projectName = getProject(req.url);
+    var projDir = projectDir(projectName);
+
+    return fsp.exists(projDir)
+    .then(function(exists) {
+        if (exists) {
+            return fsp.readdir(projDir)
+            .then(function(files) {
+                files = _.without(files,'.git');
+                res.writeHead(200, {'Content-Type': 'application/json'});
+                res.end(JSON.stringify(files,null,2)); 
+            });
+        } else {
+            res.writeHead(404, {'Content-Type': 'text/plain'});
+            res.end('Data doesn\'t exist');
+        }
+    });
 });
 
 function buildRepo(projectName) {
@@ -112,8 +112,15 @@ dispatcher.onPost(/\/\w+\/\w+/, function(req, res) {
 
             //submit the data
             if (req.params && req.params.data) {
-                data = JSON.stringify(JSON.parse(req.params.data), null, 2);
-                return fsp.writeFile(filePath(projectName, dataKey), data)
+                var strData = req.params.data;
+                try {
+                    var obj = JSON.parse(req.params.data);
+                    strData = JSON.stringify(obj, null, 2);
+                } catch (e) {
+                    console.log("Not a JSON string");
+                    strData = req.params.data;
+                }
+                return fsp.writeFile(filePath(projectName, dataKey), strData)
                 .catch(function(err) {
                     console.log(err);
                 });
@@ -129,7 +136,6 @@ dispatcher.onPost(/\/\w+\/\w+/, function(req, res) {
             return repository.getStatus({});
         })
         .then(function(st) {
-            console.log(st);
             if (st.length > 0)
             {
                 //commit
