@@ -1,9 +1,21 @@
 {
+  "name": "rb-data",
+  "version": "0.0.1",
+  "description": "An Arbitrary Data service, made from an unholy combination of node and git",
+  "author": "Paul Sztajer <paul@sztajer.org>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pdyxs/rb-data"
+  },
+  "bugs": {
+    "url": "https://github.com/pdyxs/rb-data/issues"
+  },
   "dependencies": {
     "httpdispatcher": "latest",
     "nodegit": "latest",
     "rwlock": "latest",
     "fs-promise": "latest",
     "underscore": "latest"
-  }
+  },
+  "license": "MIT"
 }
