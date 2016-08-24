@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "httpdispatcher": "latest",
+    "nodegit": "latest",
+    "rwlock": "latest",
+    "fs-promise": "latest",
+    "underscore": "latest"
+  }
+}
