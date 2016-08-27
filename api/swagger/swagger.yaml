@@ -1,0 +1,128 @@
+swagger: "2.0"
+info:
+  version: "0.0.1"
+  title: rb-data
+# during dev, should point to your local machine
+host: localhost:10010
+# basePath prefixes all resource paths 
+basePath: /
+# 
+schemes:
+  # tip: remove http to make production-grade
+  - http
+  - https
+# format of bodies a client can send (Content-Type)
+consumes:
+  - application/json
+# format of the responses to the client (Accepts)
+produces:
+  - application/json
+paths:
+  /{project}:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: project
+    get:
+      description: Lists files in a project
+      # used as the method name of the controller
+      operationId: list_files
+      parameters:
+        - name: project
+          in: path
+          description: The project to list
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            type: array
+            items:
+              type: string
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /{project}/{file}:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: file
+    get:
+      description: Get the file's data
+      # used as the method name of the controller
+      operationId: get_data
+      parameters:
+        - name: project
+          in: path
+          description: The project
+          required: true
+          type: string
+        - name: file
+          in: path
+          description: The file to retrieve
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            type: object
+        "404":
+          description: File not Found
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    post:
+      description: Get the file's data
+      # used as the method name of the controller
+      operationId: save_data
+      parameters:
+        - name: project
+          in: path
+          description: The project
+          required: true
+          type: string
+        - name: file
+          in: path
+          description: The file to write
+          required: true
+          type: string
+        - name: body
+          in: body
+          schema:
+            type: object
+            required: 
+              - data
+            properties:
+              data:
+                type: string
+              message:
+                type: string
+              name:
+                type: string
+              email:
+                type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            type: object
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /swagger:
+    x-swagger-pipe: swagger_raw
+# complex objects have schema definitions
+definitions:
+  ErrorResponse:
+    required:
+      - message
+    properties:
+      message:
+        type: string

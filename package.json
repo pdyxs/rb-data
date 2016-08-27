@@ -1,21 +1,30 @@
 {
   "name": "rb-data",
   "version": "0.0.1",
-  "description": "An Arbitrary Data service, made from an unholy combination of node and git",
-  "author": "Paul Sztajer <paul@sztajer.org>",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/pdyxs/rb-data"
-  },
-  "bugs": {
-    "url": "https://github.com/pdyxs/rb-data/issues"
-  },
+  "private": true,
+  "description": "New Swagger API Project",
+  "keywords": [],
+  "author": "",
+  "license": "",
+  "main": "app.js",
   "dependencies": {
-    "httpdispatcher": "latest",
+    "express": "^4.12.3",
+    "swagger-express-mw": "^0.1.0",
     "nodegit": "latest",
     "rwlock": "latest",
     "fs-promise": "latest",
-    "underscore": "latest"
+    "underscore": "latest",
+    "body-parser": "latest",
+    "multer": "latest"
   },
-  "license": "MIT"
+  "devDependencies": {
+    "should": "^7.1.0",
+    "supertest": "^1.0.0"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "test": "swagger project test",
+    "dev": "swagger project start",
+    "edit": "swagger project edit"
+  }
 }
