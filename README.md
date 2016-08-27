@@ -3,7 +3,7 @@ An Arbitrary Data service for quickly starting new projects
 
 rb-data is a simple server for starting web projects which involve users creating some sort of data, where the actual internals of that data are only important to the front-end. The intention is to allow developers to start working on such projects without the need to build a new server each time.
 
-rb-data is not intended for production, but is great for early projects and proof of concept.
+rb-data is not intended for production, but is(? will be? hopefully?) great for early projects and proof of concepts.
 
 Current features:
 * POST and GET for arbitrary data
