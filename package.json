@@ -15,7 +15,8 @@
     "fs-promise": "latest",
     "underscore": "latest",
     "body-parser": "latest",
-    "multer": "latest"
+    "multer": "latest",
+    "aws-sdk": "latest"
   },
   "devDependencies": {
     "should": "^7.1.0",

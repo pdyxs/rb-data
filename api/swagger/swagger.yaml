@@ -18,6 +18,34 @@ consumes:
 produces:
   - application/json
 paths:
+  /s3:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: aws
+    post:
+      description: Lists files in a project
+      # used as the method name of the controller
+      operationId: s3_signed_url
+      parameters:
+        - name: body
+          in: body
+          schema:
+            type: object
+            required:
+              - filename
+            properties:
+              filename:
+                type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            type: string
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /{project}:
     # binds a127 app logic to a route
     x-swagger-router-controller: project
