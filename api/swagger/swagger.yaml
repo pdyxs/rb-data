@@ -31,9 +31,15 @@ paths:
           schema:
             type: object
             required:
+              - bucket
               - filename
+              - type
             properties:
+              bucket:
+                type: string
               filename:
+                type: string
+              type:
                 type: string
       responses:
         "200":

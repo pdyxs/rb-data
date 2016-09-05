@@ -13,7 +13,9 @@ module.exports = {
 
 function s3_signed_url(req, res) {
   var s3 = new AWS.S3();
-  var params = {ACL: 'public-read', Bucket: 'crdbrd', Key: req.swagger.params.body.value.filename};
+  var body = req.swagger.params.body.value;
+  var params = {ACL: 'public-read', Bucket: body.bucket,
+    Key: body.filename, ContentType: body.type};
   s3.getSignedUrl('putObject', params, function(err, url) {
     res.json(url);
   });
